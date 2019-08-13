@@ -28,12 +28,6 @@ namespace P_I_F
             InitializeComponent();
         }
 
-        public string Read(string path)
-        {
-            return File.ReadAllText(path);
-
-        }
-
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -42,14 +36,57 @@ namespace P_I_F
         private void Open__Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog folderopen = new FolderBrowserDialog();
-            folderopen.Description = "검색할 폴더";
+            folderopen.Description = "검색할 폴더"; 
             folderopen.ShowDialog();
 
             selectfolder = folderopen.SelectedPath;
+            
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             string[] filelist = Directory.GetFiles(selectfolder);
-            string h = filelist[0].Substring((filelist[0].Length - 3), 3);
-            list.Items.Add(h);
-            Console.WriteLine();
+            foreach (string file in filelist)
+            {
+                string h = file.Substring((file.Length - 3), 3);
+                string filetext = File.ReadAllText(file);
+                string values = "";
+                int a = DetectPhoneNumber(filetext, ref values);
+                if (h == "txt" && a > 0)
+                {
+                    list.Items.Add(file);
+                }
+            }
+        }
+
+        private void List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string path = list.SelectedItem.ToString();
+            string text = File.ReadAllText(path);
+            TextBox.Text = text;
+        }
+
+        public int DetectPhoneNumber(String input, ref String values)
+        {
+            String[] patterns =
+            {
+                @"(^|\W)01[01]\d{7,8}(\W|$)",
+                @"(^|\W)01[01]-\d{3,4}-\d{4}(\W|$)"
+            };
+            int count = 0;
+
+            foreach (String pattern in patterns)
+            {
+                System.Text.RegularExpressions.MatchCollection matches = System.Text.RegularExpressions.Regex.Matches(input, pattern);
+
+                foreach(System.Text.RegularExpressions.Match m in matches)
+                {
+                    ++count;
+                    values += m + "\n";
+                }
+            }
+            return count;
         }
     }
 }

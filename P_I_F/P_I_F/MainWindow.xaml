@@ -8,7 +8,7 @@
         Title="개인정보 검색기 ver 1.0" Height="450" Width="800">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="653,393,0,0" TextWrapping="Wrap" Text="개인정보 검색기 ver 1.0" VerticalAlignment="Top"/>
-        <ListView x:Name="list" HorizontalAlignment="Left" Height="309" Margin="50,25,0,0" VerticalAlignment="Top" Width="250" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="list" HorizontalAlignment="Left" Height="309" Margin="50,25,0,0" VerticalAlignment="Top" Width="250" SelectionChanged="ListView_SelectionChanged" MouseDoubleClick="List_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="이름"/>
@@ -16,9 +16,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="open_" Content="열기" Margin="50,348,667,0" VerticalAlignment="Top" Height="35" FontSize="18" Click="Open__Click"/>
+        <Button x:Name="open" Content="열기" Margin="50,348,667,0" VerticalAlignment="Top" Height="35" FontSize="18" Click="Open__Click"/>
         <Button Content="저장" Margin="667,348,50,0" VerticalAlignment="Top" Height="35" FontSize="18"/>
-        <TextBox Height="309" Margin="315,25,50,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" FontSize="20"/>
+        <TextBox x:Name="TextBox" Height="309" Margin="315,25,50,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" FontSize="20"/>
+        <Button Content="검색" HorizontalAlignment="Left" Margin="225,348,0,0" VerticalAlignment="Top" Width="75" FontSize="18" Height="35" Click="Button_Click"/>
 
     </Grid>
 </Window>
